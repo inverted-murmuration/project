@@ -7,4 +7,16 @@ angular.module('app.home', [])
       $scope.loc = currentLocation;
     });
 
+    $scope.routes = [
+      {
+        name: "J"
+      },
+      {
+        name: "38"
+      },
+      {
+        name: "N"
+      }
+    ]
+
   })

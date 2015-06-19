@@ -3,6 +3,12 @@
     <h1 class="title">myBus</h1>
   </ion-header-bar>
   <ion-content ng-controller="HomeController">
-    {{ loc }}
+    <div class="list">
+        <a class="item item-thumbnail-left" href="#" ng-repeat="route in routes">
+          <img src="img/map.gif">
+          <h2>{{ route.name }}</h2>
+          <p>{{ loc }}</p>
+        </a>
+    </div>
   </ion-content>
 </ion-pane>
