@@ -1,15 +1,56 @@
 var gulp = require('gulp');
+
 var gutil = require('gulp-util');
 var bower = require('bower');
+
+var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+
+var jshint = require('gulp-jshint');
+// var karma = require('karma').server;
+var karma = require('gulp-karma-runner')
+
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
+
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var shell = require('gulp-shell');
+
+// var watch = require('gulp-watch');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  js: ['./www/js/**/*.js']
 };
+
+gulp.task('test', function() {
+  gulp.src('./www/js/**/*.js')  
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('build', function() {
+  gulp.src('./www/js/**/*.js')
+    .pipe(concat('concat.js'))
+    .pipe(gulp.dest('www/build'))
+    .pipe(rename('uglify.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('www/build'));
+});
+
+gulp.task('serveLab', shell.task([
+  'ionic serve --lab'  
+]));
+
+gulp.task('deploy', shell.task([
+  'ionic upload'
+]));
+
+gulp.task('dev', ['test']);
+
+gulp.task('prod', ['build', 'test', 'deploy'])
 
 gulp.task('default', ['sass']);
 
@@ -29,6 +70,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.js, ['dev']);
 });
 
 gulp.task('install', ['git-check'], function() {
