@@ -1,4 +1,4 @@
-https://travis-ci.org/stridentbean/project.svg
+[![Build Status](https://travis-ci.org/inverted-murmuration/project.svg)](https://travis-ci.org/inverted-murmuration/project)
 
 # Project Name
 
