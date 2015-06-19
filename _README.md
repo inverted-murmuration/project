@@ -1,3 +1,5 @@
+https://travis-ci.org/stridentbean/project.svg
+
 # Project Name
 
 > Pithy project description
