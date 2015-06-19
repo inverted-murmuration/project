@@ -20,3 +20,22 @@ angular.module('app.home', [])
     ]
 
   })
+  .controller('RestBusController', function($scope, LocationService, RestBusService) {
+    LocationService.getCurrentLocation(function(currentLocation) {
+      $scope.loc = currentLocation;
+      console.log($scope.loc);
+
+      RestBusService.getStops($scope.loc)
+      .then(function(data) {
+        $scope.stops = data;
+        console.log(data);
+      });
+    })
+
+    RestBusService.getRoute(function(data){
+
+      console.log(data.data);
+    })
+
+
+  });

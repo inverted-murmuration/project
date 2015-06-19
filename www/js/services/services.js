@@ -19,8 +19,24 @@ angular.module('app.services', [
             });
           }, function(err) {
             //handle error
-            console.log(err)
+            console.log(err);
           });
       });
-    }
+    };
+  })
+
+  .service('RestBusService', function($http) {
+    this.getRoute = function() {
+      return $http({
+        url: 'http://localhost:3535/agencies/sf-muni/routes',
+        method: 'GET'
+      })
+    };
+
+    this.getStops = function(latlon) {
+      return $http({
+        url: 'http://localhost:3535/locations/' + latlon.latitude + ',' + latlon.longitude + '/predictions',
+        method: 'GET'
+      })
+    };
   });
