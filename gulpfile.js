@@ -44,11 +44,6 @@ gulp.task('build', function() {
     .pipe(gulp.dest('www/build'));
 });
 
-gulp.task('notify', function() {
-  gulp.src('./www/js/**/*.js')
-
-});
-
 gulp.task('serveLab', shell.task([
   'ionic serve --lab'  
 ]));
