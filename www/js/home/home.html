@@ -3,24 +3,17 @@
     <h1 class="title">myBus</h1>
   </ion-header-bar>
   <ion-content ng-controller="HomeController">
-
-  </ion-content>
-  <ion-content ng-controller="RestBusController">
-   <div ng-repeat="routes in stops | orderBy:'routes.stop.distance'">
-     <a class="item item-thumbnail-left" href="#">
-       <img src="img/map.gif">
-       <h2>{{ routes.route.title }}</h2>
-       <p>{{ routes.stop.title }}</p>
-       <p>{{ routes.stop.distance }}</p>
-       <p><strong>{{ routes.values[0].direction.title }}</strong></p>
-       <p>{{ routes.values[0].minutes }} Minutes</p>
-       <p ng-show="routes.values[1].direction.title"><strong>{{ routes.values[1].direction.title }}</strong></p>
-       <p ng-show="routes.values[1]">{{ routes.values[1].minutes }} Minutes</p>
-       <p ng-show="routes.values[2].direction.title"><strong>{{ routes.values[2].direction.title }}</strong></p>
-       <p ng-show="routes.values[2]">{{ routes.values[2].minutes }} Minutes</p>
-       <p ng-show="routes.values[3].direction.title"><strong>{{ routes.values[3].direction.title }}</strong></p>
-       <p ng-show="routes.values[3]">{{ routes.values[3].minutes }} Minutes</p>
-     </a>
-   </div> 
+    <div ng-repeat="routes in stops | orderBy:'routes.stop.distance'">
+      <a class="item item-thumbnail-left" href="#">
+        <img src="img/map.gif">
+        <h2>{{ routes.route.title }}</h2>
+        <p>{{ routes.stop.title }}</p>
+        <p>{{ routes.stop.distance }}</p>
+        <div ng-repeat="value in routes.values">
+          <p><strong>{{ value.direction.title }}</strong></p>
+          <p>{{ value.minutes }} Minutes</p>
+        </div>
+      </a>
+    </div> 
   </ion-content>
 </ion-pane>
