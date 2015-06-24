@@ -23,26 +23,45 @@ angular.module('app', [
     });
   })
 
-.config(function($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider) {
 
-  // Send to home if route is not found
-  $urlRouterProvider.otherwise('/home');
+    // Send to home if route is not found
+    $urlRouterProvider.otherwise('/routes');
 
-  $stateProvider
-    .state('home', {
-      url: '/home',
-      templateUrl: 'js/home/home.html'
-    })
-    .state('details', {
-      url: '/details',
-      templateUrl: 'js/details/details.html'
-    })
-    .state('login', {
-      url: '/login',
-      templateUrl: 'js/auth/login.html'
-    })
-    .state('signup', {
-      url: '/signup',
-      templateUrl: 'js/auth/signup.html'
-    });
-});
+    $stateProvider
+      .state('routes', {
+        abstract: true,
+        url: '/routes',
+        views: {
+          routes: {
+            template: '<ion-nav-view></ion-nav-view>'
+          }
+        }
+      })
+      .state('routes.index', {
+        url: '',
+        templateUrl: 'js/home/home.html',
+        controller: 'HomeController'
+      })
+      .state('routes.details', {
+        url: '/:route',
+        templateUrl: 'js/details/details.html',
+        controller: 'DetailsController'
+      })
+      .state('login', {
+        url: '/login',
+        views: {
+          login: {
+            templateUrl: 'js/auth/login.html'
+          }
+        }
+      })
+      .state('signup', {
+        url: '/signup',
+        views: {
+          signup: {
+            templateUrl: 'js/auth/signup.html'
+          }
+        }
+      });
+  });
