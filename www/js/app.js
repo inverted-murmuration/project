@@ -26,26 +26,27 @@ angular.module('app', [
   .config(function($stateProvider, $urlRouterProvider) {
 
     // Send to home if route is not found
-    $urlRouterProvider.otherwise('/routes.index');
+    $urlRouterProvider.otherwise('busRoutes.home');
 
     $stateProvider
-      .state('routes', {
+      .state('busRoutes', {
+        url: '/busRoutes',
         abstract: true,
-        url: '/routes',
+        templateUrl: 'menu.html',
+        controller: 'AppController'
+      })
+      .state('busRoutes.home', {
+        url: '/home',
         views: {
-          routes: {
-            template: '<div></div>'
+          'menuContent': {
+            templateUrl: 'js/busRoutes/home.html',
+            controller: 'HomeController'
           }
         }
       })
-      .state('routes.index', {
-        url: '',
-        templateUrl: 'js/home/home.html',
-        controller: 'HomeController'
-      })
-      .state('routes.details', {
+      .state('busRoutes.details', {
         url: '/:route',
-        templateUrl: 'js/details/details.html',
+        templateUrl: 'js/busRoutes/details.html',
         controller: 'DetailsController'
       })
       .state('login', {
@@ -64,4 +65,7 @@ angular.module('app', [
           }
         }
       });
-  });
+  })
+  .controller('AppController', function($scope){
+
+    });

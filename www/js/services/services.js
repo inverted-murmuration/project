@@ -44,8 +44,8 @@ angular.module('app.services', [
   /** ??? */
   this.getRoute = function() {
     return $http({
-      url: 'http://mybus-api.herokuapp.com/agencies/sf-muni/routes',
-      // url: 'http://localhost:3000/agencies/sf-muni/routes',
+      url: 'http://mybus-api.herokuapp.com/agencies/sf-muni/busRoutes',
+      // url: 'http://localhost:3000/agencies/sf-muni/busRoutes',
       method: 'GET'
     });
   };

@@ -1,7 +1,7 @@
 angular.module('app.home', [])
 
-  .controller('HomeController', function($scope, $location, LocationService, RestBusService, PageChangeService) {
-    
+.controller('HomeController', function($scope, $location, LocationService, RestBusService, PageChangeService) {
+
     $scope.loc;
     $scope.stops;
 
