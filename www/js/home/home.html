@@ -1,7 +1,4 @@
-<ion-pane>
-  <ion-header-bar class="bar-stable">
-    <h1 class="title">myBus</h1>
-  </ion-header-bar>
+<ion-view view-title="Routes">
   <ion-content ng-controller="HomeController">
     <div ng-repeat="routes in stops | orderBy:'routes.stop.distance'" ng-click='changePage(routes, "details")'>
       <a class="item item-thumbnail-left">
@@ -13,7 +10,27 @@
           <p><strong>{{ value.direction.title }}</strong></p>
           <p>{{ value.minutes }} Minutes</p>
         </div>
-    </div> 
-    </a>
+      </a>
+    </div>
   </ion-content>
-</ion-pane>
+</ion-view>
+
+<!--<ion-pane>-->
+  <!--<ion-header-bar class="bar-stable">-->
+    <!--<h1 class="title">myBus</h1>-->
+  <!--</ion-header-bar>-->
+  <!--<ion-content ng-controller="HomeController">-->
+    <!--<div ng-repeat="routes in stops | orderBy:'routes.stop.distance'" ng-click='changePage(routes, "details")'>-->
+      <!--<a class="item item-thumbnail-left">-->
+        <!--<img src="img/map.gif">-->
+        <!--<h2>{{ routes.route.title }}</h2>-->
+        <!--<p>{{ routes.stop.title }}</p>-->
+        <!--<p>{{ routes.stop.distance }}</p>-->
+        <!--<div ng-repeat="value in routes.values">-->
+          <!--<p><strong>{{ value.direction.title }}</strong></p>-->
+          <!--<p>{{ value.minutes }} Minutes</p>-->
+        <!--</div>-->
+      <!--</a>-->
+    <!--</div>-->
+  <!--</ion-content>-->
+<!--</ion-pane>-->
