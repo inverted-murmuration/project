@@ -23,26 +23,49 @@ angular.module('app', [
     });
   })
 
-.config(function($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider) {
 
-  // Send to home if route is not found
-  $urlRouterProvider.otherwise('/home');
+    // Send to home if route is not found
+    $urlRouterProvider.otherwise('busRoutes.home');
 
-  $stateProvider
-    .state('home', {
-      url: '/home',
-      templateUrl: 'js/home/home.html'
-    })
-    .state('details', {
-      url: '/details',
-      templateUrl: 'js/details/details.html'
-    })
-    .state('login', {
-      url: '/login',
-      templateUrl: 'js/auth/login.html'
-    })
-    .state('signup', {
-      url: '/signup',
-      templateUrl: 'js/auth/signup.html'
+    $stateProvider
+      .state('busRoutes', {
+        url: '/busRoutes',
+        abstract: true,
+        templateUrl: 'menu.html',
+        controller: 'AppController'
+      })
+      .state('busRoutes.home', {
+        url: '/home',
+        views: {
+          'menuContent': {
+            templateUrl: 'js/busRoutes/home.html',
+            controller: 'HomeController'
+          }
+        }
+      })
+      .state('busRoutes.details', {
+        url: '/:route',
+        templateUrl: 'js/busRoutes/details.html',
+        controller: 'DetailsController'
+      })
+      .state('login', {
+        url: '/login',
+        views: {
+          login: {
+            templateUrl: 'js/auth/login.html'
+          }
+        }
+      })
+      .state('signup', {
+        url: '/signup',
+        views: {
+          signup: {
+            templateUrl: 'js/auth/signup.html'
+          }
+        }
+      });
+  })
+  .controller('AppController', function($scope){
+
     });
-});
