@@ -40,50 +40,36 @@ angular.module('app.services', [
   };
 })
 
-.service('RestBusService', function($http) {
-  /** ??? */
-  this.getRoute = function() {
-    return $http({
-      url: 'http://mybus-api.herokuapp.com/agencies/sf-muni/routes',
-      // url: 'http://localhost:3000/agencies/sf-muni/routes',
-      method: 'GET'
-    });
-  };
-
+.service('RestBusService', function($http, $q, LocationService) {
   /** 
    * Gets the stations that are closest in proximity to the user 
    * @param {object} latlon - Object with a latitude and longitude
    */
-  this.getStops = function(latlon) {
-    return $http({
-      url: 'http://mybus-api.herokuapp.com/locations/' + latlon.latitude + ',' + latlon.longitude + '/predictions',
-      // url: 'http://localhost:3000/locations/' + latlon.latitude + ',' + latlon.longitude + '/predictions',
-      method: 'GET'
-    });
-  };
-})
-
-.service('VehiclesService', function($http) {
-  this.getVehicles = function() {
-    return $http({
-      url: 'http://mybus-api.herokuapp.com/agencies/sf-muni/vehicles',
-      method: 'GET'
-    });
-  };
-})
-
-.service('StopCodeService', function($http) {
-  this.getStopCodes = function() {
-    return $http({
-      url: 'http://mybus-api.herokuapp.com/agencies/sf-muni/routes/5/stops/5646/predictions',
-      method: 'GET'
-    });
-  };
-})
-
-.service('PageChangeService', function() {
-  this.currentRoute;
-  this.backView = [];
+  return {
+    routes: [],
+    getRoutes: function() {
+      var dfd = $q.defer();
+      LocationService.getCurrentLocation(function(latlon){
+        $http({
+          url: 'http://mybus-api.herokuapp.com/locations/' + latlon.latitude + ',' + latlon.longitude + '/predictions',
+          method: 'GET'
+        }).success(function(data) {
+          this.routes = data;
+          dfd.resolve(data);
+        })
+      });
+      return dfd.promise;
+    },
+    getRoute: function(routeId) {
+      var dfd  = $q.defer();
+      this.routes.forEach(function(route) {
+        if (route.route.id === routeId) {
+          dfd.resolve(routes);
+        }
+      });
+      return dfd.promise;
+    }
+  }
 })
 
 .service('ReadFileService', function($http) {

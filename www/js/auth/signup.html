@@ -1,18 +1,16 @@
-<ion-pane ng-controller="SignupController">
-  <ion-view view-title="Signup" name="signup-view">
-    <ion-content class="padding">
-        <div class="list list-inset">
-            <label class="item item-input">
-                <input type="text" placeholder="Email" ng-model="data.email">
-            </label>
-            <label class="item item-input">
-                <input type="password" placeholder="Password" ng-model="data.password">
-            </label>
-            <label class="item item-input">
-                <input type="password" placeholder="Confirm Password" ng-model="data.confirmPassword">
-            </label>
-        </div>
-        <button class="button button-block button-calm" ng-click="login()">Login</button>
-    </ion-content>
-  </ion-view>
-</ion-pane>
+<ion-view view-title="Signup">
+  <ion-content ng-controller="SignupController" class="padding">
+    <div class="list list-inset">
+      <label class="item item-input">
+        <input type="text" placeholder="Email" ng-model="data.email">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Password" ng-model="data.password">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Confirm Password" ng-model="data.confirmPassword">
+      </label>
+    </div>
+    <button class="button button-block button-calm" ng-click="login()">Login</button>
+  </ion-content>
+</ion-view>

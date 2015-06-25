@@ -24,26 +24,62 @@ angular.module('app', [
     });
   })
 
-.config(function($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider) {
 
-  // Send to home if route is not found
-  $urlRouterProvider.otherwise('/home');
+    // Send to home if route is not found
+    $urlRouterProvider.otherwise('/routes');
 
-  $stateProvider
-    .state('home', {
-      url: '/home',
-      templateUrl: 'js/home/home.html'
-    })
-    .state('details', {
-      url: '/details',
-      templateUrl: 'js/details/details.html'
-    })
-    .state('login', {
-      url: '/login',
-      templateUrl: 'js/auth/login.html'
-    })
-    .state('signup', {
-      url: '/signup',
-      templateUrl: 'js/auth/signup.html'
-    });
-});
+    $stateProvider
+      .state('app', {
+        url: '',
+        abstract: true,
+        templateUrl: 'menu.html',
+        controller: 'AppController'
+      })
+      .state('app.routes', {
+        url: '/routes',
+        views: {
+          'menuContent': {
+            templateUrl: 'js/busRoutes/home.html',
+            controller: 'HomeController'
+          }
+        },
+        resolve: {
+          routes: function(RestBusService) {
+            return RestBusService.getRoutes();
+          }
+        }
+      })
+      .state('app.details', {
+        url: '/routes/:routeId',
+        views: {
+          'menuContent': {
+            templateUrl: 'js/busRoutes/details.html',
+            controller: 'DetailsController'
+          }
+        },
+        resolve: {
+          route: function($scopeParams, RestBusService) {
+            return RestBusService.getRoute($stateParams.routeId).resolve('routes')
+          }
+        }
+      })
+      .state('app.login', {
+        url: '/login',
+        views: {
+          'menuContent': {
+            templateUrl: 'js/auth/login.html'
+          }
+        }
+      })
+      .state('app.signup', {
+        url: '/signup',
+        views: {
+          'menuContent': {
+            templateUrl: 'js/auth/signup.html'
+          }
+        }
+      });
+  })
+  .controller('AppController', function($scope){
+  })
