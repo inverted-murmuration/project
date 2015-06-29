@@ -26,7 +26,8 @@ angular.module('app.services', [
             longitude: position.coords.longitude
           });
         }, function(err) {
-            console.log('hey', err);
+          console.log(err);
+          /* TODO Handle GPS off error
           var alertPopup = $ionicPopup.alert({
             title: 'Cannot find your location',
             template: 'Could not get the current position. Either GPS signals are weak or GPS has been switched off'
@@ -34,6 +35,7 @@ angular.module('app.services', [
           alertPopup.then(function(res) {
             //handle error
           });
+          */
 
         });
     });
@@ -54,7 +56,7 @@ angular.module('app.services', [
   var routes = [];
   this.getRoutes = function() {
     var dfd = $q.defer();
-    LocationService.getCurrentLocation(function(latlon){
+    LocationService.getCurrentLocation(function(latlon) {
       $http({
         url: 'http://mybus-api.herokuapp.com/locations/' + latlon.latitude + ',' + latlon.longitude + '/predictions',
         method: 'GET'
@@ -66,8 +68,8 @@ angular.module('app.services', [
     return dfd.promise;
   };
 
-  this.getRoute =  function(routeId) {
-    var dfd  = $q.defer();
+  this.getRoute = function(routeId) {
+    var dfd = $q.defer();
     routes.forEach(function(route) {
       if (route.route.id === routeId) {
         dfd.resolve(route);
@@ -79,11 +81,14 @@ angular.module('app.services', [
   this.getStationLocation = function(map, route) {
 
     ReadFileService.readFile('../stops.json')
-    .then(function(data) {
-      var station = data.data[route.stop.id];
-      var loc = {latitude: station.lat, longitude: station.lon};
-      MapService.createMarker(map, loc);
-    });
+      .then(function(data) {
+        var station = data.data[route.stop.id];
+        var loc = {
+          latitude: station.lat,
+          longitude: station.lon
+        };
+        MapService.createMarker(map, loc);
+      });
 
   };
 
@@ -102,10 +107,10 @@ angular.module('app.services', [
   // put vehicle on map
   this.displayVehicle = function(map, loc, image) {
     return new google.maps.Marker({
-        position: new google.maps.LatLng(loc.latitude, loc.longitude),
-        map: map,
-        icon: image
-      });
+      position: new google.maps.LatLng(loc.latitude, loc.longitude),
+      map: map,
+      icon: image
+    });
   };
 
   // create vehicles and display them on map
@@ -115,18 +120,21 @@ angular.module('app.services', [
 
     //put vehicles on map
     this.getVehicles()
-    .then(function(data) {
-      var vehicles = data.data;
-      var routeId = route.route.id;
+      .then(function(data) {
+        var vehicles = data.data;
+        var routeId = route.route.id;
 
-      for(var i = 0, len = vehicles.length; i < len; i++) {
-        if(vehicles[i].routeId === routeId) {
-          var loc = {latitude: vehicles[i].lat, longitude: vehicles[i].lon};
-          vehicleMarkers[vehicles[i].id] = displayVehicle(map, loc, image);
+        for (var i = 0, len = vehicles.length; i < len; i++) {
+          if (vehicles[i].routeId === routeId) {
+            var loc = {
+              latitude: vehicles[i].lat,
+              longitude: vehicles[i].lon
+            };
+            vehicleMarkers[vehicles[i].id] = displayVehicle(map, loc, image);
+          }
         }
-      }
 
-    });
+      });
   };
 
 })
@@ -134,16 +142,16 @@ angular.module('app.services', [
 .service('ReadFileService', function($http) {
 
   /**
-  * read a specific file
-  * @param {string} loc - location of file
-  */
+   * read a specific file
+   * @param {string} loc - location of file
+   */
   this.readFile = function(loc) {
     return $http({
       url: loc,
       method: 'GET'
     });
   };
-  
+
 })
 
 .service('MapService', function() {
@@ -151,19 +159,23 @@ angular.module('app.services', [
   // create a map
   this.createMap = function(loc) {
     // var sanFran = {lat: 37.78, lng: -122.416}
-    var mapOptions = {center: {lat: loc.latitude, lng: loc.longitude}, zoom: 17};
+    var mapOptions = {
+      center: {
+        lat: loc.latitude,
+        lng: loc.longitude
+      },
+      zoom: 17
+    };
     return new google.maps.Map(document.getElementById('mapContainer'), mapOptions);
   };
 
   // create a map marker
   this.createMarker = function(map, loc, image) {
     return new google.maps.Marker({
-        position: new google.maps.LatLng(loc.latitude, loc.longitude),
-        map: map,
-        icon: image
-      });
+      position: new google.maps.LatLng(loc.latitude, loc.longitude),
+      map: map,
+      icon: image
+    });
   };
 
 });
-
-
